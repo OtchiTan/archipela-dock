@@ -1,0 +1,226 @@
+@font-face {
+  font-family: 'LexendDeca-Regular';
+  src: url('/login-assets/fonts/LexendDeca-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'LondrinaSolid-Regular';
+  src: url('/login-assets/fonts/LondrinaSolid-Regular.ttf') format('truetype');
+}
+
+:root {
+  --sky-top: #76b6ff;
+  --sky-bottom: #c8e8ff;
+  --sea-top: #2e8bd5;
+  --sea-bottom: #0d4b7a;
+  --card-top: #ffffff;
+  --card-bottom: #f2fbff;
+  --text-main: #103a53;
+  --text-muted: #4e748f;
+  --accent: #fccf58;
+  --accent-deep: #e7a81f;
+  --input-border: #9ec7df;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'LexendDeca-Regular', 'Trebuchet MS', sans-serif;
+  min-height: 100vh;
+  color: var(--text-main);
+  background:
+    radial-gradient(circle at 70% 15%, #ffffffbf 0%, #ffffff00 30%),
+    linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 58%, var(--sea-top) 58%, var(--sea-bottom) 100%);
+}
+
+.login-page {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 2rem 1.25rem 2.75rem;
+  overflow: hidden;
+}
+
+.login-card {
+  width: min(94vw, 430px);
+  padding: 1.5rem 1.5rem 1.6rem;
+  border-radius: 22px;
+  background: linear-gradient(180deg, var(--card-top), var(--card-bottom));
+  border: 3px solid #ffffff9f;
+  box-shadow:
+    0 24px 56px #03263f42,
+    inset 0 -8px 18px #8eb7cc2e;
+  backdrop-filter: blur(2px);
+  z-index: 2;
+  animation: card-rise 700ms ease-out both;
+}
+
+.login-logo {
+  width: min(72%, 250px);
+  display: block;
+  margin: 0 auto 0.8rem;
+}
+
+.eyebrow {
+  margin: 0;
+  font-family: 'LondrinaSolid-Regular', 'Verdana', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-size: 1.05rem;
+  color: var(--accent-deep);
+}
+
+h1 {
+  margin: 0.1rem 0 0.3rem;
+  font-family: 'LondrinaSolid-Regular', 'Verdana', sans-serif;
+  font-size: clamp(2rem, 4.8vw, 2.45rem);
+  line-height: 1;
+}
+
+.login-subtitle {
+  margin: 0 0 1.2rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.login-form label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.login-form input {
+  border: 2px solid var(--input-border);
+  border-radius: 12px;
+  padding: 0.8rem 0.85rem;
+  font-size: 1rem;
+  background: #ffffffd4;
+  color: var(--text-main);
+  transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.login-form input:focus {
+  outline: none;
+  border-color: #2b98e7;
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 3px #80cbff55;
+}
+
+.login-form button {
+  margin-top: 0.85rem;
+  border: 0;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #ffe07f 0%, var(--accent) 60%, var(--accent-deep) 100%);
+  color: #5a3a03;
+  font-family: 'LondrinaSolid-Regular', 'Verdana', sans-serif;
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  box-shadow: 0 7px 0 #9a6508, 0 14px 22px #7f4f0545;
+  transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
+}
+
+.login-form button:hover {
+  transform: translateY(-2px);
+  filter: saturate(1.05);
+}
+
+.login-form button:active {
+  transform: translateY(2px);
+  box-shadow: 0 4px 0 #9a6508, 0 8px 14px #7f4f0545;
+}
+
+.deco-cloud,
+.deco-island,
+.deco-rock {
+  position: absolute;
+  user-select: none;
+  pointer-events: none;
+}
+
+.deco-cloud {
+  opacity: 0.75;
+  animation: cloud-float 11s ease-in-out infinite;
+}
+
+.cloud-left {
+  width: min(36vw, 320px);
+  left: -35px;
+  top: 20%;
+}
+
+.cloud-right {
+  width: min(29vw, 260px);
+  right: -26px;
+  top: 34%;
+  animation-delay: -2.2s;
+}
+
+.cloud-top {
+  width: min(23vw, 210px);
+  top: 8%;
+  right: 22%;
+  animation-delay: -4.3s;
+}
+
+.deco-island {
+  width: min(38vw, 260px);
+  left: -35px;
+  bottom: -24px;
+}
+
+.deco-rock {
+  width: min(11vw, 74px);
+  right: 10%;
+  bottom: 6%;
+}
+
+@keyframes cloud-float {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+
+  50% {
+    transform: translateY(-10px) translateX(6px);
+  }
+}
+
+@keyframes card-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .login-page {
+    padding: 1rem 0.8rem 1.6rem;
+  }
+
+  .login-card {
+    border-radius: 18px;
+    padding: 1.2rem 1rem 1.3rem;
+  }
+
+  .deco-rock {
+    right: 4%;
+  }
+}
