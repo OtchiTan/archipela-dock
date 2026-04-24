@@ -1,18 +1,28 @@
 import { useState } from 'react'
-import type { FormEvent } from 'react'
+import type { SyntheticEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './LoginPage.css'
 
+const LOGIN_STORAGE_KEY = 'archipelaDockLogin'
+const LOGIN_REDIRECT_PATH = '/testarchi'
+
 function LoginPage() {
-  const [pseudo, setPseudo] = useState('')
+  const navigate = useNavigate()
+  const [address, setAddress] = useState('')
+  const [slotName, setSlotName] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    console.log('Tentative de connexion', {
-      pseudo,
+    const loginData = {
+      address: address.trim(),
+      slotName: slotName.trim(),
       password,
-    })
+    }
+
+    localStorage.setItem(LOGIN_STORAGE_KEY, JSON.stringify(loginData))
+    navigate(LOGIN_REDIRECT_PATH)
   }
 
   return (
@@ -44,20 +54,31 @@ function LoginPage() {
           <p className="eyebrow">Dock Access</p>
           <h1 id="login-title">Connexion</h1>
           <p className="login-subtitle">
-            Entre ton pseudo et ton mot de passe pour rejoindre ton instance.
+            Entre l'adresse, le slot et ton mot de passe si necessaire.
           </p>
         </header>
 
         <form className="login-form" onSubmit={handleSubmit}>
-          <label htmlFor="pseudo">Pseudo</label>
+          <label htmlFor="address">Adresse</label>
           <input
-            id="pseudo"
-            name="pseudo"
+            id="address"
+            name="address"
             type="text"
-            placeholder="Ex: CaptainSeed"
-            autoComplete="username"
-            value={pseudo}
-            onChange={(event) => setPseudo(event.target.value)}
+            placeholder="Ex: ws://localhost:38281"
+            autoComplete="url"
+            value={address}
+            onChange={(event) => setAddress(event.target.value)}
+            required
+          />
+
+          <label htmlFor="slotName">Nom de slot</label>
+          <input
+            id="slotName"
+            name="slotName"
+            type="text"
+            placeholder="Ex: Player1"
+            value={slotName}
+            onChange={(event) => setSlotName(event.target.value)}
             required
           />
 
@@ -70,7 +91,6 @@ function LoginPage() {
             autoComplete="current-password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
-            required
           />
 
           <button type="submit">Se connecter</button>
