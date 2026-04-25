@@ -3,8 +3,8 @@ import type { SyntheticEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './LoginPage.css'
 
-const LOGIN_STORAGE_KEY = 'archipelaDockLogin'
-const LOGIN_REDIRECT_PATH = '/testarchi'
+const LOGIN_STORAGE_KEY = 'archiLogin'
+const LOGIN_REDIRECT_PATH = '/dashboard'
 
 function LoginPage() {
   const navigate = useNavigate()
