@@ -1,29 +1,35 @@
 import { useState } from 'react'
 import type { SyntheticEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useArchipelago } from '../hooks/ArchipelagoContext';
 import './LoginPage.css'
 
 const LOGIN_STORAGE_KEY = 'archiLogin'
 const LOGIN_REDIRECT_PATH = '/dashboard'
 
 function LoginPage() {
-  const navigate = useNavigate()
-  const [address, setAddress] = useState('')
-  const [slotName, setSlotName] = useState('')
-  const [password, setPassword] = useState('')
+  const navigate = useNavigate();
+  const { connectServer } = useArchipelago();
 
-  const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  const [address, setAddress] = useState('');
+  const [slotName, setSlotName] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
     const loginData = {
       address: address.trim(),
       slotName: slotName.trim(),
       password,
-    }
+    };
 
-    localStorage.setItem(LOGIN_STORAGE_KEY, JSON.stringify(loginData))
-    navigate(LOGIN_REDIRECT_PATH)
-  }
+    localStorage.setItem(LOGIN_STORAGE_KEY, JSON.stringify(loginData));
+
+    await connectServer(loginData.address, loginData.slotName, loginData.password);
+
+    navigate(LOGIN_REDIRECT_PATH);
+  };
 
   return (
     <main className="login-page">

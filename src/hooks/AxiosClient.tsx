@@ -8,6 +8,7 @@ function AxiosClient() {
       baseURL: 'https://jsonplaceholder.typicode.com',
       timeout: 1000,
     })
+    console.log('Axios client created')
     return client
   }, [])
 }
