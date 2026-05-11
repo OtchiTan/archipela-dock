@@ -1,0 +1,398 @@
+@import url("https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@400;900&family=Nunito+Sans:wght@600;700;800&display=swap");
+
+.deathlink-leaderboard {
+  position: relative;
+  min-height: 100vh;
+  padding: 2rem 1.25rem 2.75rem;
+  color: #103a53;
+  font-family: "Nunito Sans", "Trebuchet MS", sans-serif;
+  background:
+    radial-gradient(circle at 70% 15%, #ffffffbf 0%, #ffffff00 30%),
+    linear-gradient(180deg, #76b6ff 0%, #c8e8ff 58%, #2e8bd5 58%, #0d4b7a 100%);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.deathlink-leaderboard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 25%, rgba(255, 255, 255, 0.85) 0 6px, transparent 7px),
+    radial-gradient(circle at 75% 18%, rgba(255, 255, 255, 0.65) 0 4px, transparent 5px),
+    radial-gradient(circle at 45% 12%, rgba(255, 255, 255, 0.55) 0 3px, transparent 4px);
+  pointer-events: none;
+}
+
+.deathlink-leaderboard__cloud,
+.deathlink-leaderboard__island,
+.deathlink-leaderboard__rock {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+
+.deathlink-leaderboard__cloud {
+  opacity: 0.82;
+  filter: drop-shadow(0 12px 18px rgba(3, 38, 63, 0.14));
+  animation: cloud-float 11s ease-in-out infinite;
+}
+
+.deathlink-leaderboard__cloud--left {
+  width: min(36vw, 320px);
+  left: -28px;
+  top: 20%;
+}
+
+.deathlink-leaderboard__cloud--top {
+  width: min(23vw, 210px);
+  top: 8%;
+  right: 22%;
+  animation-delay: -3s;
+}
+
+.deathlink-leaderboard__cloud--right {
+  width: min(29vw, 260px);
+  right: -26px;
+  top: 34%;
+  animation-delay: -1.8s;
+}
+
+.deathlink-leaderboard__island {
+  width: min(34vw, 240px);
+  left: -22px;
+  bottom: -22px;
+  opacity: 0.95;
+}
+
+.deathlink-leaderboard__rock {
+  width: min(11vw, 74px);
+  right: 10%;
+  bottom: 6%;
+  opacity: 0.92;
+}
+
+.deathlink-leaderboard__hero {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 auto 22px;
+  max-width: 1280px;
+  text-align: center;
+  animation: card-rise 700ms ease-out both;
+}
+
+.deathlink-leaderboard__eyebrow {
+  margin: 0 0 8px;
+  font-family: "Londrina Solid", "Trebuchet MS", sans-serif;
+  font-size: 2.0rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e7a81f;
+}
+
+.deathlink-leaderboard__title {
+  margin: 0;
+  font-family: "Londrina Solid", "Trebuchet MS", sans-serif;
+  font-size: clamp(2rem, 4.8vw, 2.45rem);
+  line-height: 1;
+  color: #103a53;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.deathlink-leaderboard__stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(110px, 1fr));
+  gap: 12px;
+}
+
+.deathlink-leaderboard__stats article {
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 3px solid #ffffff9f;
+  background: linear-gradient(180deg, #ffffff, #f2fbff);
+  box-shadow:
+    0 24px 56px #03263f42,
+    inset 0 -8px 18px #8eb7cc2e;
+  animation: card-rise 700ms ease-out both;
+}
+
+.deathlink-leaderboard__stats span,
+.deathlink-leaderboard__stats strong {
+  display: block;
+}
+
+.deathlink-leaderboard__stats span {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #4e748f;
+}
+
+.deathlink-leaderboard__stats strong {
+  margin-top: 8px;
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1;
+  color: #103a53;
+}
+
+.deathlink-leaderboard__panel {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 16px;
+  border-radius: 22px;
+  border: 3px solid #ffffff9f;
+  background:
+    radial-gradient(130% 95% at 100% 0%, rgba(255, 120, 120, 0.1), transparent 58%),
+    linear-gradient(180deg, #ffffff, #f2fbff);
+  box-shadow:
+    0 24px 56px #03263f42,
+    inset 0 -8px 18px #8eb7cc2e;
+  backdrop-filter: blur(2px);
+  overflow: hidden;
+  animation: card-rise 700ms ease-out both;
+}
+
+.deathlink-leaderboard__headerRow,
+.deathlink-leaderboard__row {
+  display: grid;
+  grid-template-columns: 88px 2fr 140px 120px 100px 2.1fr;
+  gap: 14px;
+  align-items: center;
+}
+
+.deathlink-leaderboard__headerRow {
+  padding: 10px 14px 14px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #4e748f;
+}
+
+.deathlink-leaderboard__rows {
+  display: grid;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.deathlink-leaderboard__row {
+  padding: 16px 14px;
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, #ffffff 0%, #f2fbff 100%);
+  border: 1px solid #9ec7df;
+  box-shadow: inset 0 -4px 12px rgba(142, 183, 204, 0.18);
+  animation: row-rise 420ms ease-out both;
+}
+
+.deathlink-leaderboard__row--rank-1 {
+  background:
+    linear-gradient(180deg, #fff8d9 0%, #fff1b3 100%);
+  border-color: #f1c94f;
+  box-shadow:
+    inset 0 -4px 12px rgba(194, 150, 24, 0.18),
+    0 0 0 1px rgba(241, 201, 79, 0.18);
+}
+
+.deathlink-leaderboard__row--rank-2 {
+  background:
+    linear-gradient(180deg, #f7fafc 0%, #edf2f7 100%);
+  border-color: #b9c4cf;
+  box-shadow:
+    inset 0 -4px 12px rgba(102, 120, 138, 0.12),
+    0 0 0 1px rgba(168, 179, 191, 0.16);
+}
+
+.deathlink-leaderboard__row--rank-3 {
+  background:
+    linear-gradient(180deg, #fff4e7 0%, #f6e1c7 100%);
+  border-color: #d2a26d;
+  box-shadow:
+    inset 0 -4px 12px rgba(161, 111, 54, 0.12),
+    0 0 0 1px rgba(176, 138, 90, 0.16);
+}
+
+.deathlink-leaderboard__rank {
+  font-family: "Londrina Solid", "Trebuchet MS", sans-serif;
+  font-size: 24px;
+  color: #e7a81f;
+}
+
+.deathlink-leaderboard__row--rank-2 .deathlink-leaderboard__rank {
+  color: #a8b3bf;
+}
+
+.deathlink-leaderboard__row--rank-3 .deathlink-leaderboard__rank {
+  color: #b08a5a;
+}
+
+.deathlink-leaderboard__row--rank-4 .deathlink-leaderboard__rank {
+  color: #5f7f94;
+}
+
+.deathlink-leaderboard__row--rank-4 .deathlink-leaderboard__player,
+.deathlink-leaderboard__row--rank-4 .deathlink-leaderboard__score,
+.deathlink-leaderboard__row--rank-4 .deathlink-leaderboard__kills,
+.deathlink-leaderboard__row--rank-4 .deathlink-leaderboard__games,
+.deathlink-leaderboard__row--rank-4 .deathlink-leaderboard__topGame {
+  color: #517085;
+}
+
+.deathlink-leaderboard__row--rank-4,
+.deathlink-leaderboard__row:not([class*="deathlink-leaderboard__row--rank-"]) {
+  background: linear-gradient(180deg, #fbfdff 0%, #eff5f9 100%);
+  border-color: #c7d6e0;
+  box-shadow: inset 0 -4px 12px rgba(104, 129, 148, 0.12);
+}
+
+.deathlink-leaderboard__player {
+  font-weight: 800;
+  font-size: 18px;
+  color: #103a53;
+}
+
+.deathlink-leaderboard__score,
+.deathlink-leaderboard__kills,
+.deathlink-leaderboard__games {
+  font-size: 18px;
+  font-weight: 700;
+  color: #103a53;
+}
+
+.deathlink-leaderboard__topGame {
+  color: #4e748f;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.deathlink-leaderboard__empty {
+  padding: 48px 16px;
+  text-align: center;
+  color: #4e748f;
+  font-size: 18px;
+}
+
+.deathlink-leaderboard__more {
+  margin-top: 6px;
+  padding: 0 14px 2px;
+  text-align: right;
+  font-size: 14px;
+  color: #4e748f;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 960px) {
+  .deathlink-leaderboard {
+    padding: 20px;
+  }
+
+  .deathlink-leaderboard__hero {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .deathlink-leaderboard__stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .deathlink-leaderboard__headerRow,
+  .deathlink-leaderboard__row {
+    grid-template-columns: 56px 1.5fr 84px 84px 72px 1.5fr;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 720px) {
+  .deathlink-leaderboard {
+    padding: 16px;
+  }
+
+  .deathlink-leaderboard__title {
+    font-size: 42px;
+  }
+
+  .deathlink-leaderboard__stats {
+    grid-template-columns: 1fr;
+  }
+
+  .deathlink-leaderboard__panel {
+    padding: 12px;
+  }
+
+  .deathlink-leaderboard__headerRow {
+    display: none;
+  }
+
+  .deathlink-leaderboard__row {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 12px;
+    padding: 14px 12px;
+  }
+
+  .deathlink-leaderboard__rank {
+    font-size: 22px;
+  }
+
+  .deathlink-leaderboard__player {
+    font-size: 16px;
+  }
+
+  .deathlink-leaderboard__score,
+  .deathlink-leaderboard__kills,
+  .deathlink-leaderboard__games,
+  .deathlink-leaderboard__topGame {
+    text-align: left;
+    font-size: 15px;
+  }
+
+  .deathlink-leaderboard__topGame {
+    grid-column: 1 / -1;
+    white-space: normal;
+  }
+
+  .deathlink-leaderboard__more {
+    text-align: center;
+  }
+}
+
+@keyframes cloud-float {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+
+  50% {
+    transform: translateY(-10px) translateX(6px);
+  }
+}
+
+@keyframes card-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes row-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

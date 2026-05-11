@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'LexendDeca-Regular';
-  src: url('/login-assets/fonts/LexendDeca-Regular.ttf') format('truetype');
+  src: url('/assets/fonts/LexendDeca-Regular.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'LondrinaSolid-Regular';
-  src: url('/login-assets/fonts/LondrinaSolid-Regular.ttf') format('truetype');
+  src: url('/assets/fonts/LondrinaSolid-Regular.ttf') format('truetype');
 }
 
 :root {

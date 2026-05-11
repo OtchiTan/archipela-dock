@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import type { SyntheticEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useArchipelago } from '../hooks/ArchipelagoContext';
 import './LoginPage.css'
 
 const LOGIN_STORAGE_KEY = 'archiLogin'
@@ -9,7 +8,6 @@ const LOGIN_REDIRECT_PATH = '/dashboard'
 
 function LoginPage() {
   const navigate = useNavigate();
-  const { connectServer } = useArchipelago();
 
   const [address, setAddress] = useState('');
   const [slotName, setSlotName] = useState('');
@@ -26,8 +24,6 @@ function LoginPage() {
 
     localStorage.setItem(LOGIN_STORAGE_KEY, JSON.stringify(loginData));
 
-    await connectServer(loginData.address, loginData.slotName, loginData.password);
-
     navigate(LOGIN_REDIRECT_PATH);
   };
 
@@ -35,24 +31,24 @@ function LoginPage() {
     <main className="login-page">
       <img
         className="deco-cloud cloud-left"
-        src="/login-assets/images/cloud-0001.webp"
+        src="/assets/images/cloud-0001.webp"
         alt=""
       />
       <img
         className="deco-cloud cloud-right"
-        src="/login-assets/images/cloud-0002.webp"
+        src="/assets/images/cloud-0002.webp"
         alt=""
       />
       <img
         className="deco-cloud cloud-top"
-        src="/login-assets/images/cloud-0003.webp"
+        src="/assets/images/cloud-0003.webp"
         alt=""
       />
 
       <section className="login-card" aria-labelledby="login-title">
         <img
           className="login-logo"
-          src="/login-assets/images/header-logo-full.svg"
+          src="/assets/images/header-logo-full.svg"
           alt="Archipelago"
         />
 
@@ -105,12 +101,12 @@ function LoginPage() {
 
       <img
         className="deco-island"
-        src="/login-assets/images/island-a.webp"
+        src="/assets/images/island-a.webp"
         alt=""
       />
       <img
         className="deco-rock"
-        src="/login-assets/images/rock-single.webp"
+        src="/assets/images/rock-single.webp"
         alt=""
       />
     </main>
