@@ -120,7 +120,6 @@ function LoginPage() {
         />
 
         <header className="login-card__header">
-          <p className="eyebrow">Dock Access</p>
           <h1 id="login-title">Choisir un event</h1>
           <p className="login-subtitle">
             Sélectionne l'event host à afficher sur le dashboard.

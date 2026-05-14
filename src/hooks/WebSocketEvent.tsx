@@ -1,7 +1,7 @@
 import { io, type Socket } from "socket.io-client";
 import { useMemo } from "react";
 
-const socketUrl = import.meta.env.VITE_SOCKET_URL ?? "/events";
+const socketUrl = import.meta.env.VITE_SOCKET_URL || "/events";
 
 function useWebSocketEvent(eventId: number | null): Socket | null {
   return useMemo(() => {
