@@ -7,9 +7,9 @@ function App() {
   return (
     <Routes>
       <Route path="/overlay" element={<TestPage />} />
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
-      <Route path="*" element={<Navigate to="/login" replace />} />
+      <Route path="/" element={<LoginPage />} />
+      <Route path="/dashboard" element={<DashboardPage />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
 }

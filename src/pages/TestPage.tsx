@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import AxiosClient from "../hooks/AxiosClient";
+import useAxiosClient from "../hooks/AxiosClient";
 
 type Post = {
     id: number;
@@ -10,7 +10,7 @@ function TestPage() {
     const [data, setData] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const axios = AxiosClient();
+    const axios = useAxiosClient();
 
     useEffect(() => {
         axios

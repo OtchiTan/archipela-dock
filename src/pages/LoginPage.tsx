@@ -1,28 +1,92 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { SyntheticEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
+import useAxiosClient from '../hooks/AxiosClient'
+import type { PlayerInfo } from '../types/socket.types'
 import './LoginPage.css'
 
-const LOGIN_STORAGE_KEY = 'archiLogin'
+const EVENT_ID_STORAGE_KEY = 'archiEventId'
 const LOGIN_REDIRECT_PATH = '/dashboard'
+
+type HostEvent = {
+  id: number
+  name: string
+  channelId: string
+  messageId: string
+  url: string | null
+  startTime: string | null
+  endTime: string | null
+  clientConnected: boolean
+  players: PlayerInfo[]
+}
 
 function LoginPage() {
   const navigate = useNavigate();
+  const axios = useAxiosClient();
 
-  const [address, setAddress] = useState('');
-  const [slotName, setSlotName] = useState('');
-  const [password, setPassword] = useState('');
+  const [events, setEvents] = useState<HostEvent[]>([]);
+  const [selectedEventId, setSelectedEventId] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    axios
+      .get<HostEvent[]>('/ap-events')
+      .then((response) => {
+        if (!isMounted) {
+          return;
+        }
+
+        const loadedEvents = response.data.filter((event) => event.endTime === null);
+        setEvents(loadedEvents);
+
+        const storedEventId = window.localStorage.getItem(EVENT_ID_STORAGE_KEY);
+        const hasStoredEvent = storedEventId
+          ? loadedEvents.some((event) => String(event.id) === storedEventId)
+          : false;
+
+        if (hasStoredEvent) {
+          setSelectedEventId(storedEventId ?? '');
+        } else if (loadedEvents.length > 0) {
+          setSelectedEventId(String(loadedEvents[0].id));
+        }
+
+        setError(null);
+      })
+      .catch((requestError) => {
+        if (!isMounted) {
+          return;
+        }
+
+        if (requestError instanceof Error) {
+          setError(requestError.message);
+        } else {
+          setError('Impossible de charger la liste des events.');
+        }
+      })
+      .finally(() => {
+        if (isMounted) {
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [axios]);
 
   const handleSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const loginData = {
-      address: address.trim(),
-      slotName: slotName.trim(),
-      password,
-    };
+    const parsedEventId = Number(selectedEventId.trim());
 
-    localStorage.setItem(LOGIN_STORAGE_KEY, JSON.stringify(loginData));
+    if (!Number.isFinite(parsedEventId) || parsedEventId <= 0) {
+      return;
+    }
+
+    localStorage.setItem(EVENT_ID_STORAGE_KEY, String(parsedEventId));
 
     navigate(LOGIN_REDIRECT_PATH);
   };
@@ -30,84 +94,78 @@ function LoginPage() {
   return (
     <main className="login-page">
       <img
-        className="deco-cloud cloud-left"
+        className="login-deco login-deco--left"
         src="/assets/images/cloud-0001.webp"
         alt=""
+        aria-hidden="true"
       />
       <img
-        className="deco-cloud cloud-right"
+        className="login-deco login-deco--top"
         src="/assets/images/cloud-0002.webp"
         alt=""
+        aria-hidden="true"
       />
       <img
-        className="deco-cloud cloud-top"
+        className="login-deco login-deco--right"
         src="/assets/images/cloud-0003.webp"
         alt=""
+        aria-hidden="true"
       />
 
       <section className="login-card" aria-labelledby="login-title">
         <img
-          className="login-logo"
+          className="login-card__brand"
           src="/assets/images/header-logo-full.svg"
           alt="Archipelago"
         />
 
-        <header>
+        <header className="login-card__header">
           <p className="eyebrow">Dock Access</p>
-          <h1 id="login-title">Connexion</h1>
+          <h1 id="login-title">Choisir un event</h1>
           <p className="login-subtitle">
-            Entre l'adresse, le slot et ton mot de passe si necessaire.
+            Sélectionne l'event host à afficher sur le dashboard.
           </p>
         </header>
 
         <form className="login-form" onSubmit={handleSubmit}>
-          <label htmlFor="address">Adresse</label>
-          <input
-            id="address"
-            name="address"
-            type="text"
-            placeholder="Ex: ws://localhost:38281"
-            autoComplete="url"
-            value={address}
-            onChange={(event) => setAddress(event.target.value)}
+          <label htmlFor="eventId">Event</label>
+          <select
+            id="eventId"
+            name="eventId"
+            value={selectedEventId}
+            onChange={(event) => setSelectedEventId(event.target.value)}
+            disabled={loading || events.length === 0}
             required
-          />
+          >
+            <option value="" disabled>
+              {loading ? 'Chargement des events...' : 'Sélectionner un event'}
+            </option>
+            {events.map((eventOption) => (
+              <option key={eventOption.id} value={String(eventOption.id)}>
+                {eventOption.name} #{eventOption.id}
+              </option>
+            ))}
+          </select>
 
-          <label htmlFor="slotName">Nom de slot</label>
-          <input
-            id="slotName"
-            name="slotName"
-            type="text"
-            placeholder="Ex: Player1"
-            value={slotName}
-            onChange={(event) => setSlotName(event.target.value)}
-            required
-          />
+          {error && <p className="login-error">{error}</p>}
 
-          <label htmlFor="password">Mot de passe</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            placeholder="••••••••"
-            autoComplete="current-password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-
-          <button type="submit">Se connecter</button>
+          <button type="submit" disabled={loading || events.length === 0}>
+            Ouvrir le dashboard
+          </button>
         </form>
       </section>
 
       <img
-        className="deco-island"
+        className="login-deco login-deco--island"
         src="/assets/images/island-a.webp"
         alt=""
+        aria-hidden="true"
       />
       <img
-        className="deco-rock"
+        className="login-deco login-deco--rock"
         src="/assets/images/rock-single.webp"
         alt=""
+        aria-hidden="true"
       />
     </main>
   )

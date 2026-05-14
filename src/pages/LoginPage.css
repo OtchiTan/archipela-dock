@@ -20,6 +20,7 @@
   --accent: #fccf58;
   --accent-deep: #e7a81f;
   --input-border: #9ec7df;
+  --input-bg: #ffffffd4;
 }
 
 * {
@@ -46,9 +47,9 @@ body {
 }
 
 .login-card {
-  width: min(94vw, 430px);
-  padding: 1.5rem 1.5rem 1.6rem;
-  border-radius: 22px;
+  width: min(94vw, 420px);
+  padding: 1.8rem 1.6rem 1.7rem;
+  border-radius: 24px;
   background: linear-gradient(180deg, var(--card-top), var(--card-bottom));
   border: 3px solid #ffffff9f;
   box-shadow:
@@ -59,10 +60,14 @@ body {
   animation: card-rise 700ms ease-out both;
 }
 
-.login-logo {
+.login-card__brand {
   width: min(72%, 250px);
   display: block;
   margin: 0 auto 0.8rem;
+}
+
+.login-card__header {
+  margin-bottom: 1.2rem;
 }
 
 .eyebrow {
@@ -77,7 +82,7 @@ body {
 h1 {
   margin: 0.1rem 0 0.3rem;
   font-family: 'LondrinaSolid-Regular', 'Verdana', sans-serif;
-  font-size: clamp(2rem, 4.8vw, 2.45rem);
+  font-size: clamp(2.15rem, 5vw, 2.7rem);
   line-height: 1;
 }
 
@@ -95,25 +100,54 @@ h1 {
 }
 
 .login-form label {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   font-weight: 600;
 }
 
-.login-form input {
+.login-form input,
+.login-form select {
   border: 2px solid var(--input-border);
-  border-radius: 12px;
-  padding: 0.8rem 0.85rem;
+  border-radius: 14px;
+  padding: 0.9rem 0.95rem;
   font-size: 1rem;
-  background: #ffffffd4;
+  background: var(--input-bg);
   color: var(--text-main);
   transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
 }
 
-.login-form input:focus {
+.login-form input:focus,
+.login-form select:focus {
   outline: none;
   border-color: #2b98e7;
   transform: translateY(-1px);
   box-shadow: 0 0 0 3px #80cbff55;
+}
+
+.login-form select {
+  appearance: none;
+  cursor: pointer;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--text-muted) 50%),
+    linear-gradient(135deg, var(--text-muted) 50%, transparent 50%);
+  background-position:
+    calc(100% - 22px) calc(50% - 2px),
+    calc(100% - 16px) calc(50% - 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 2.5rem;
+}
+
+.login-form select:disabled,
+.login-form button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.login-error {
+  margin: 0.25rem 0 0;
+  color: #8d2e52;
+  font-size: 0.9rem;
+  line-height: 1.4;
 }
 
 .login-form button {
@@ -142,49 +176,52 @@ h1 {
   box-shadow: 0 4px 0 #9a6508, 0 8px 14px #7f4f0545;
 }
 
-.deco-cloud,
-.deco-island,
-.deco-rock {
+.login-deco,
+.login-deco--island,
+.login-deco--rock {
   position: absolute;
-  user-select: none;
   pointer-events: none;
+  user-select: none;
 }
 
-.deco-cloud {
-  opacity: 0.75;
+.login-deco {
+  opacity: 0.82;
+  filter: drop-shadow(0 12px 18px rgba(3, 38, 63, 0.14));
   animation: cloud-float 11s ease-in-out infinite;
 }
 
-.cloud-left {
+.login-deco--left {
   width: min(36vw, 320px);
-  left: -35px;
+  left: -28px;
   top: 20%;
 }
 
-.cloud-right {
-  width: min(29vw, 260px);
-  right: -26px;
-  top: 34%;
-  animation-delay: -2.2s;
-}
-
-.cloud-top {
+.login-deco--top {
   width: min(23vw, 210px);
   top: 8%;
   right: 22%;
-  animation-delay: -4.3s;
+  animation-delay: -3s;
 }
 
-.deco-island {
-  width: min(38vw, 260px);
-  left: -35px;
-  bottom: -24px;
+.login-deco--right {
+  width: min(29vw, 260px);
+  right: -26px;
+  top: 34%;
+  animation-delay: -1.8s;
 }
 
-.deco-rock {
+.login-deco--island {
+  width: min(34vw, 240px);
+  left: -22px;
+  bottom: -22px;
+  opacity: 0.95;
+}
+
+.login-deco--rock {
   width: min(11vw, 74px);
   right: 10%;
   bottom: 6%;
+  opacity: 0.92;
 }
 
 @keyframes cloud-float {
@@ -220,7 +257,11 @@ h1 {
     padding: 1.2rem 1rem 1.3rem;
   }
 
-  .deco-rock {
+  .login-deco--rock {
     right: 4%;
+  }
+
+  h1 {
+    font-size: 2rem;
   }
 }

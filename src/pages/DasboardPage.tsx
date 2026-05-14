@@ -1,4 +1,6 @@
+import { Navigate } from "react-router-dom";
 import { useEffect, useMemo, useRef, useState } from "react";
+import useAxiosClient from "../hooks/AxiosClient";
 import WebSocketEvent from "../hooks/WebSocketEvent";
 import type { DeathlinkEvent, DeathlinkEventInstance, Game } from "../types/socket.types";
 import { DeathlinkAlert } from "../components/DeathlinkAlert";
@@ -6,6 +8,8 @@ import { DeathlinkLeaderboard } from "../components/DeathlinkLeaderboard";
 import { LeaderboardChampionAlert } from "../components/LeaderboardChampionAlert";
 import { getTopLeaderboardPlayer } from "../utils/deathlinkLeaderboard";
 import { DEATHLINK_ALERT_DURATION_MS } from "../components/DeathlinkAlert";
+
+const EVENT_ID_STORAGE_KEY = "archiEventId";
 
 type ChampionAlertState = {
     newLeaderName: string;
@@ -15,7 +19,19 @@ type ChampionAlertState = {
 } | null;
 
 function DashboardPage() {
-    const socket = WebSocketEvent();
+    const axios = useAxiosClient();
+    const [eventId] = useState<number | null>(() => {
+        const storedEventId = window.localStorage.getItem(EVENT_ID_STORAGE_KEY);
+
+        if (!storedEventId) {
+            return null;
+        }
+
+        const parsedEventId = Number(storedEventId);
+
+        return Number.isFinite(parsedEventId) && parsedEventId > 0 ? parsedEventId : null;
+    });
+    const socket = WebSocketEvent(eventId);
     const [lastDeathlinkEvent, setLastDeathlinkEvent] = useState<DeathlinkEvent | null>(null);
     const [lastDeathlinkInstance, setLastDeathlinkInstance] = useState<DeathlinkEventInstance | null>(null);
     const [lastGame, setLastGame] = useState<Game | null>(null);
@@ -27,6 +43,39 @@ function DashboardPage() {
     const currentLeader = useMemo(() => getTopLeaderboardPlayer(lastDeathlinkEvent), [lastDeathlinkEvent]);
 
     useEffect(() => {
+        if (eventId === null) {
+            return;
+        }
+
+        let isMounted = true;
+
+        axios
+            .get<DeathlinkEvent>(`/ap-events/${eventId}/deathlinks`)
+            .then((response) => {
+                if (!isMounted) {
+                    return;
+                }
+
+                setLastDeathlinkEvent(response.data);
+            })
+            .catch((requestError) => {
+                if (!isMounted) {
+                    return;
+                }
+
+                console.error("Impossible de charger le leaderboard initial", requestError);
+            });
+
+        return () => {
+            isMounted = false;
+        };
+    }, [axios, eventId]);
+
+    useEffect(() => {
+        if (!socket) {
+            return;
+        }
+
         const handleConnect = () => {
             console.log('connecté');
         };
@@ -93,6 +142,10 @@ function DashboardPage() {
             }
         };
     }, [currentLeader, lastDeathlinkEvent]);
+
+    if (eventId === null) {
+        return <Navigate to="/" replace />;
+    }
 
     return (
         <div style={{ position: "relative", minHeight: "100vh" }}>

@@ -14,6 +14,10 @@ export default defineConfig({
         target: 'http://localhost:30000',
         changeOrigin: true,
       },
+      '/ap-events': {
+        target: 'http://localhost:30000',
+        changeOrigin: true,
+      },
     },
   },
 })

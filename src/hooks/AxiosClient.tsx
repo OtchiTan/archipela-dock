@@ -1,16 +1,13 @@
-import { useMemo } from "react"
-import axios from 'axios';
+import { useMemo } from "react";
+import axios, { type AxiosInstance } from "axios";
 
-
-function AxiosClient() {
+function useAxiosClient(baseURL = ""): AxiosInstance {
   return useMemo(() => {
-    const client = axios.create({
-      baseURL: 'https://jsonplaceholder.typicode.com',
-      timeout: 1000,
-    })
-    console.log('Axios client created')
-    return client
-  }, [])
+    return axios.create({
+      baseURL,
+      timeout: 5000,
+    });
+  }, [baseURL]);
 }
 
-export default AxiosClient
+export default useAxiosClient;
