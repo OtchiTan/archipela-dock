@@ -42,8 +42,7 @@ function DashboardPage() {
       : null;
   });
   const socket = WebSocketEvent(eventId);
-  const [lastDeathlinkEvent, setLastDeathlinkEvent] =
-    useState<EventStats | null>(null);
+  const [eventStats, setLastDeathlinkEvent] = useState<EventStats | null>(null);
   const [lastDeathlinkInstance, setLastDeathlinkInstance] =
     useState<DeathlinkEventInstance | null>(null);
   const [lastGame, setLastGame] = useState<Game | null>(null);
@@ -53,8 +52,8 @@ function DashboardPage() {
   const championAlertTimerRef = useRef<number | null>(null);
 
   const currentLeader = useMemo(
-    () => getTopLeaderboardPlayer(lastDeathlinkEvent),
-    [lastDeathlinkEvent],
+    () => getTopLeaderboardPlayer(eventStats),
+    [eventStats],
   );
 
   useEffect(() => {
@@ -125,7 +124,7 @@ function DashboardPage() {
   }, [socket]);
 
   useEffect(() => {
-    if (!lastDeathlinkEvent || !currentLeader) {
+    if (!eventStats || !currentLeader) {
       return;
     }
 
@@ -152,7 +151,7 @@ function DashboardPage() {
       setChampionAlert({
         newLeaderName: currentLeader.playerName,
         oldLeaderName: previousLeaderName,
-        eventName: lastDeathlinkEvent.eventName,
+        eventName: eventStats.eventName,
         newLeaderDeathlink: currentLeader.deathlink,
       });
     }, DEATHLINK_ALERT_DURATION_MS + 200);
@@ -163,7 +162,7 @@ function DashboardPage() {
         championAlertTimerRef.current = null;
       }
     };
-  }, [currentLeader, lastDeathlinkEvent]);
+  }, [currentLeader, eventStats]);
 
   if (eventId === null) {
     return <Navigate to="/" replace />;
@@ -171,19 +170,19 @@ function DashboardPage() {
 
   return (
     <div className="dashboard">
-      <StatsPage />
-      <DeathlinkLeaderboard event={lastDeathlinkEvent} />
-      {lastDeathlinkEvent && lastDeathlinkInstance && lastGame && (
+      {eventStats && eventStats.endTime !== null && <StatsPage />}
+      <DeathlinkLeaderboard event={eventStats} />
+      {eventStats && lastDeathlinkInstance && lastGame && (
         <DeathlinkAlert
-          key={`${lastDeathlinkEvent.eventId}-${lastDeathlinkInstance.id}-${lastGame.id}`}
-          event={lastDeathlinkEvent}
+          key={`${eventStats.eventId}-${lastDeathlinkInstance.id}-${lastGame.id}`}
+          event={eventStats}
           deathlink={lastDeathlinkInstance}
           game={lastGame}
         />
       )}
       {championAlert && (
         <LeaderboardChampionAlert
-          key={`${lastDeathlinkEvent?.eventId ?? "no-event"}-${championAlert.newLeaderName}`}
+          key={`${eventStats?.eventId ?? "no-event"}-${championAlert.newLeaderName}`}
           alert={championAlert}
           onComplete={() => setChampionAlert(null)}
         />

@@ -62,6 +62,8 @@ export class EventStats {
   playtime: number = 0;
   deathlink: number = 0;
   killCount: number = 0;
+  startTime?: Date;
+  endTime?: Date;
 }
 
 export class PlayerStats {

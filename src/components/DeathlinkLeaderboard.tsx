@@ -43,10 +43,10 @@ export function DeathlinkLeaderboard({ event }: DeathlinkLeaderboardProps) {
   }, []);
 
   const visibleRows = useMemo(() => {
-    if (!maxVisibleRows) return rows;
+    if (!maxVisibleRows || event?.endTime !== null) return rows;
 
     return rows.slice(0, maxVisibleRows);
-  }, [rows, maxVisibleRows]);
+  }, [rows, maxVisibleRows, event]);
 
   const hiddenRowsCount = Math.max(0, rows.length - visibleRows.length);
 
