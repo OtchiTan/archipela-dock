@@ -1,5 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { DeathlinkEvent, DeathlinkEventInstance, Game } from "../types/socket.types";
+import type {
+  DeathlinkEventInstance,
+  EventStats,
+  Game,
+} from "../types/socket.types";
 import "./DeathlinkAlert.css";
 
 export const DEATHLINK_ALERT_DURATION_MS = 4200;
@@ -103,7 +107,10 @@ function playAlertSound(soundUrl: string, volume = 0.6) {
   return audio;
 }
 
-function scheduleAlertDismissal(audio: HTMLAudioElement, onDismiss: () => void) {
+function scheduleAlertDismissal(
+  audio: HTMLAudioElement,
+  onDismiss: () => void,
+) {
   const minDurationTimer = window.setTimeout(() => {
     if (audio.ended || audio.paused) {
       onDismiss();
@@ -122,12 +129,16 @@ function scheduleAlertDismissal(audio: HTMLAudioElement, onDismiss: () => void) 
 }
 
 interface DeathlinkAlertProps {
-  event: DeathlinkEvent | null;
+  event: EventStats | null;
   deathlink?: DeathlinkEventInstance;
   game?: Game;
 }
 
-export function DeathlinkAlert({ event, deathlink, game }: DeathlinkAlertProps) {
+export function DeathlinkAlert({
+  event,
+  deathlink,
+  game,
+}: DeathlinkAlertProps) {
   const [isVisible, setIsVisible] = useState(true);
   const media = useState<{ gifUrl: string; soundUrl: string }>(() => ({
     gifUrl: pickRandomItem(DEATHLINK_GIF_OPTIONS),
@@ -145,14 +156,14 @@ export function DeathlinkAlert({ event, deathlink, game }: DeathlinkAlertProps) 
       return { playerName, gameName, deathCount };
     }
 
-    const firstPlayer = event.playerDeathlinks[0];
+    const firstPlayer = event.playersStats[0];
     if (!firstPlayer) return null;
 
     const playerName = firstPlayer.playerName;
     const deathCount = firstPlayer.deathlink;
 
-    const gameWithDeathlink = firstPlayer.gamesDeathlinks.find(
-      (g) => g.deathlink > 0
+    const gameWithDeathlink = firstPlayer.gamesStats.find(
+      (g) => g.deathlink > 0,
     );
     const gameName = gameWithDeathlink?.gameName || "Unknown Game";
 
@@ -190,7 +201,12 @@ export function DeathlinkAlert({ event, deathlink, game }: DeathlinkAlertProps) 
       role="alert"
     >
       <div className="deathlink-media">
-        <img className="deathlink-gif" src={media.gifUrl} alt="" aria-hidden="true" />
+        <img
+          className="deathlink-gif"
+          src={media.gifUrl}
+          alt=""
+          aria-hidden="true"
+        />
       </div>
       <div className="deathlink-copy">
         <div className="deathlink-kicker">DeathLink</div>
