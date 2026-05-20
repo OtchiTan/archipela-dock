@@ -1,10 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
-import type { DeathlinkEvent } from "../types/socket.types";
-import { getLeaderboardRows, type LeaderboardRow } from "../utils/deathlinkLeaderboard";
+import type { EventStats } from "../types/socket.types";
+import {
+  getLeaderboardRows,
+  type LeaderboardRow,
+} from "../utils/deathlinkLeaderboard";
 import "./DeathlinkLeaderboard.css";
 
 interface DeathlinkLeaderboardProps {
-  event: DeathlinkEvent | null;
+  event: EventStats | null;
 }
 
 export function DeathlinkLeaderboard({ event }: DeathlinkLeaderboardProps) {
@@ -27,7 +30,7 @@ export function DeathlinkLeaderboard({ event }: DeathlinkLeaderboardProps) {
       const gap = 10;
 
       const availableRows = Math.floor(
-        Math.max(height - reservedSpace, rowHeight) / (rowHeight + gap)
+        Math.max(height - reservedSpace, rowHeight) / (rowHeight + gap),
       );
 
       setMaxVisibleRows(Math.max(1, availableRows));
@@ -60,22 +63,52 @@ export function DeathlinkLeaderboard({ event }: DeathlinkLeaderboardProps) {
     return {
       totalDeathlinks: event.deathlink,
       totalKills: event.killCount,
-      playersCount: event.playerDeathlinks.length,
+      playersCount: event.playersStats.length,
       eventName: event.eventName,
     };
   }, [event]);
 
   return (
-    <section className="deathlink-leaderboard" aria-label="Leaderboard DeathLink">
-      <img className="deathlink-leaderboard__cloud deathlink-leaderboard__cloud--left" src="/assets/images/cloud-0001.webp" alt="" aria-hidden="true" />
-      <img className="deathlink-leaderboard__cloud deathlink-leaderboard__cloud--top" src="/assets/images/cloud-0002.webp" alt="" aria-hidden="true" />
-      <img className="deathlink-leaderboard__cloud deathlink-leaderboard__cloud--right" src="/assets/images/cloud-0003.webp" alt="" aria-hidden="true" />
-      <img className="deathlink-leaderboard__island" src="/assets/images/island-a.webp" alt="" aria-hidden="true" />
-      <img className="deathlink-leaderboard__rock" src="/assets/images/rock-single.webp" alt="" aria-hidden="true" />
+    <section
+      className="deathlink-leaderboard"
+      aria-label="Leaderboard DeathLink"
+    >
+      <img
+        className="deathlink-leaderboard__cloud deathlink-leaderboard__cloud--left"
+        src="/assets/images/cloud-0001.webp"
+        alt=""
+        aria-hidden="true"
+      />
+      <img
+        className="deathlink-leaderboard__cloud deathlink-leaderboard__cloud--top"
+        src="/assets/images/cloud-0002.webp"
+        alt=""
+        aria-hidden="true"
+      />
+      <img
+        className="deathlink-leaderboard__cloud deathlink-leaderboard__cloud--right"
+        src="/assets/images/cloud-0003.webp"
+        alt=""
+        aria-hidden="true"
+      />
+      <img
+        className="deathlink-leaderboard__island"
+        src="/assets/images/island-a.webp"
+        alt=""
+        aria-hidden="true"
+      />
+      <img
+        className="deathlink-leaderboard__rock"
+        src="/assets/images/rock-single.webp"
+        alt=""
+        aria-hidden="true"
+      />
 
       <header className="deathlink-leaderboard__hero">
         <div>
-          <h1 className="deathlink-leaderboard__eyebrow">{summary.eventName}</h1>
+          <h1 className="deathlink-leaderboard__eyebrow">
+            {summary.eventName}
+          </h1>
         </div>
 
         <div className="deathlink-leaderboard__stats">
@@ -111,12 +144,24 @@ export function DeathlinkLeaderboard({ event }: DeathlinkLeaderboardProps) {
                 className={`deathlink-leaderboard__row deathlink-leaderboard__row--rank-${Math.min(index + 1, 4)}`}
                 key={player.playerId}
               >
-                <span className="deathlink-leaderboard__rank">#{index + 1}</span>
-                <span className="deathlink-leaderboard__player">{player.playerName}</span>
-                <span className="deathlink-leaderboard__kills">{player.killCount}</span>
-                <span className="deathlink-leaderboard__score">{player.deathlink}</span>
-                <span className="deathlink-leaderboard__games">{player.totalGames}</span>
-                <span className="deathlink-leaderboard__topGame">{player.topGameName}</span>
+                <span className="deathlink-leaderboard__rank">
+                  #{index + 1}
+                </span>
+                <span className="deathlink-leaderboard__player">
+                  {player.playerName}
+                </span>
+                <span className="deathlink-leaderboard__kills">
+                  {player.killCount}
+                </span>
+                <span className="deathlink-leaderboard__score">
+                  {player.deathlink}
+                </span>
+                <span className="deathlink-leaderboard__games">
+                  {player.totalGames}
+                </span>
+                <span className="deathlink-leaderboard__topGame">
+                  {player.topGameName}
+                </span>
               </article>
             ))}
 

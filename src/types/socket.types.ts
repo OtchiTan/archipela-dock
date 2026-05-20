@@ -1,28 +1,3 @@
-// Event Types
-export interface DeathlinkEvent {
-  eventId: number;
-  eventName: string;
-  playerDeathlinks: PlayerDeathlink[];
-  deathlink: number;
-  killCount: number;
-}
-
-export interface PlayerDeathlink {
-  playerId: number;
-  playerName: string;
-  gamesDeathlinks: GameDeathlink[];
-  deathlink: number;
-  killCount: number;
-}
-
-export interface GameDeathlink {
-  gameId: number;
-  slot: string;
-  gameName: string;
-  deathlink: number;
-  killCount: number;
-}
-
 // Deathlink Instance Types
 export interface DeathlinkEventInstance {
   id: number;
@@ -70,4 +45,39 @@ export interface Game {
   isCoreGame: boolean;
   event: EventInfo;
   player: PlayerInfo;
+}
+
+export type Deathlink = {
+  id: number;
+  timestamp: number;
+  cause: string;
+  killCount: number;
+  game: Game;
+};
+
+export class EventStats {
+  eventId!: number;
+  eventName!: string;
+  playersStats: PlayerStats[] = [];
+  playtime: number = 0;
+  deathlink: number = 0;
+  killCount: number = 0;
+}
+
+export class PlayerStats {
+  playerId!: number;
+  playerName!: string;
+  gamesStats: GameStats[] = [];
+  playtime: number = 0;
+  deathlink: number = 0;
+  killCount: number = 0;
+}
+
+export class GameStats {
+  gameId!: number;
+  slot!: string;
+  gameName!: string;
+  playtime: number = 0;
+  deathlink: number = 0;
+  killCount: number = 0;
 }

@@ -1,31 +1,31 @@
-import { useEffect, useState } from 'react'
-import type { SyntheticEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
-import useAxiosClient from '../hooks/AxiosClient'
-import type { PlayerInfo } from '../types/socket.types'
-import './LoginPage.css'
+import type { SyntheticEvent } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useAxiosClient from "../hooks/AxiosClient";
+import type { PlayerInfo } from "../types/socket.types";
+import "./LoginPage.css";
 
-const EVENT_ID_STORAGE_KEY = 'archiEventId'
-const LOGIN_REDIRECT_PATH = '/dashboard'
+const EVENT_ID_STORAGE_KEY = "archiEventId";
+const LOGIN_REDIRECT_PATH = "/dashboard";
 
 type HostEvent = {
-  id: number
-  name: string
-  channelId: string
-  messageId: string
-  url: string | null
-  startTime: string | null
-  endTime: string | null
-  clientConnected: boolean
-  players: PlayerInfo[]
-}
+  id: number;
+  name: string;
+  channelId: string;
+  messageId: string;
+  url: string | null;
+  startTime: string | null;
+  endTime: string | null;
+  clientConnected: boolean;
+  players: PlayerInfo[];
+};
 
 function LoginPage() {
   const navigate = useNavigate();
   const axios = useAxiosClient();
 
   const [events, setEvents] = useState<HostEvent[]>([]);
-  const [selectedEventId, setSelectedEventId] = useState('');
+  const [selectedEventId, setSelectedEventId] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -33,13 +33,13 @@ function LoginPage() {
     let isMounted = true;
 
     axios
-      .get<HostEvent[]>('/ap-events')
+      .get<HostEvent[]>("/ap-events")
       .then((response) => {
         if (!isMounted) {
           return;
         }
 
-        const loadedEvents = response.data.filter((event) => event.endTime === null);
+        const loadedEvents = response.data;
         setEvents(loadedEvents);
 
         const storedEventId = window.localStorage.getItem(EVENT_ID_STORAGE_KEY);
@@ -48,7 +48,7 @@ function LoginPage() {
           : false;
 
         if (hasStoredEvent) {
-          setSelectedEventId(storedEventId ?? '');
+          setSelectedEventId(storedEventId ?? "");
         } else if (loadedEvents.length > 0) {
           setSelectedEventId(String(loadedEvents[0].id));
         }
@@ -63,7 +63,7 @@ function LoginPage() {
         if (requestError instanceof Error) {
           setError(requestError.message);
         } else {
-          setError('Impossible de charger la liste des events.');
+          setError("Impossible de charger la liste des events.");
         }
       })
       .finally(() => {
@@ -137,11 +137,11 @@ function LoginPage() {
             required
           >
             <option value="" disabled>
-              {loading ? 'Chargement des events...' : 'Sélectionner un event'}
+              {loading ? "Chargement des events..." : "Sélectionner un event"}
             </option>
             {events.map((eventOption) => (
               <option key={eventOption.id} value={String(eventOption.id)}>
-                {eventOption.name} #{eventOption.id}
+                {eventOption.name}
               </option>
             ))}
           </select>
@@ -167,7 +167,7 @@ function LoginPage() {
         aria-hidden="true"
       />
     </main>
-  )
+  );
 }
 
-export default LoginPage
+export default LoginPage;

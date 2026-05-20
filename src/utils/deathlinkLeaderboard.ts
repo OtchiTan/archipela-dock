@@ -1,12 +1,12 @@
-import type { DeathlinkEvent, PlayerDeathlink } from "../types/socket.types";
+import type { EventStats, PlayerStats } from "../types/socket.types";
 
-export type LeaderboardRow = PlayerDeathlink & {
+export type LeaderboardRow = PlayerStats & {
   totalGames: number;
   topGameName: string;
 };
 
-function pickTopGame(player: PlayerDeathlink) {
-  const topGame = [...player.gamesDeathlinks].sort((left, right) => {
+function pickTopGame(player: PlayerStats) {
+  const topGame = [...player.gamesStats].sort((left, right) => {
     if (right.deathlink !== left.deathlink) {
       return right.deathlink - left.deathlink;
     }
@@ -21,9 +21,9 @@ function pickTopGame(player: PlayerDeathlink) {
   return topGame?.gameName || "Aucun jeu";
 }
 
-export function getLeaderboardRows(event: DeathlinkEvent | null) {
+export function getLeaderboardRows(event: EventStats | null) {
   if (!event) return [] as LeaderboardRow[];
-  return [...event.playerDeathlinks]
+  return [...event.playersStats]
     .sort((left, right) => {
       // Primary sort: total kills (desc)
       if (right.killCount !== left.killCount) {
@@ -40,11 +40,11 @@ export function getLeaderboardRows(event: DeathlinkEvent | null) {
     })
     .map((player) => ({
       ...player,
-      totalGames: player.gamesDeathlinks.length,
+      totalGames: player.gamesStats.length,
       topGameName: pickTopGame(player),
     }));
 }
 
-export function getTopLeaderboardPlayer(event: DeathlinkEvent | null) {
+export function getTopLeaderboardPlayer(event: EventStats | null) {
   return getLeaderboardRows(event)[0] ?? null;
 }
