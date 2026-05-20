@@ -112,21 +112,33 @@ export const Stats = ({ eventPlaytime }: StatsType) => {
                       </div>
                       {player.gamesStats.map((game) => (
                         <div className="playtime__gameRow" key={game.gameId}>
-                          <span className="playtime__gameSlot">
+                          <div
+                            className="playtime__gameField"
+                            data-label="Slot"
+                          >
                             {game.slot}
-                          </span>
-                          <span className="playtime__gameName">
+                          </div>
+                          <div className="playtime__gameField" data-label="Jeu">
                             {game.gameName}
-                          </span>
-                          <span className="playtime__deathLink">
+                          </div>
+                          <div
+                            className="playtime__gameField"
+                            data-label="Deathlink"
+                          >
                             {game.deathlink != 0 ? game.deathlink : ""}
-                          </span>
-                          <span className="playtime__killCount">
+                          </div>
+                          <div
+                            className="playtime__gameField"
+                            data-label="Killcount"
+                          >
                             {game.killCount != 0 ? game.killCount : ""}
-                          </span>
-                          <span className="playtime__gameTime">
+                          </div>
+                          <div
+                            className="playtime__gameField"
+                            data-label="Temps"
+                          >
                             {formatPlaytime(game.playtime)}
-                          </span>
+                          </div>
                         </div>
                       ))}
                     </div>

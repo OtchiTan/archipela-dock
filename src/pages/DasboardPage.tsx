@@ -14,6 +14,7 @@ import type {
   Game,
 } from "../types/socket.types";
 import { getTopLeaderboardPlayer } from "../utils/deathlinkLeaderboard";
+import "./DasboardPage.css";
 import StatsPage from "./StatsPage";
 
 const EVENT_ID_STORAGE_KEY = "archiEventId";
@@ -169,7 +170,7 @@ function DashboardPage() {
   }
 
   return (
-    <div style={{ position: "relative", minHeight: "100vh" }}>
+    <div className="dashboard">
       <StatsPage />
       <DeathlinkLeaderboard event={lastDeathlinkEvent} />
       {lastDeathlinkEvent && lastDeathlinkInstance && lastGame && (

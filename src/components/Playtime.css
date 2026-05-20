@@ -132,7 +132,6 @@
   display: block;
   font-size: 1.05rem;
   font-weight: 800;
-  text-align: start;
   color: #103a53;
 }
 
@@ -169,7 +168,7 @@
 .playtime__gamesHeader,
 .playtime__gameRow {
   display: grid;
-  grid-template-columns: 110px minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 96px;
+  grid-template-columns: 110px minmax(0, 1fr) 96px;
   gap: 14px;
   align-items: center;
 }
@@ -230,11 +229,7 @@
     align-items: stretch;
   }
 
-  /* stack game grid into labeled blocks for mobile */
-  .playtime__gamesHeader {
-    display: none;
-  }
-
+  .playtime__gamesHeader,
   .playtime__gameRow {
     grid-template-columns: 1fr;
     gap: 10px;
@@ -242,26 +237,5 @@
 
   .playtime__gameRow {
     padding: 10px 0;
-  }
-}
-
-/* styles for labeled fields inside each game row */
-.playtime__gameField {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  align-items: center;
-}
-
-.playtime__gameField::before {
-  content: attr(data-label) ": ";
-  color: #4e748f;
-  font-weight: 700;
-  margin-right: 8px;
-}
-
-@media (min-width: 721px) {
-  .playtime__gameField::before {
-    content: none;
   }
 }
