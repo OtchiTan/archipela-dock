@@ -51,8 +51,9 @@ export type Deathlink = {
   id: number;
   timestamp: number;
   cause: string;
+  slot: string;
   killCount: number;
-  game: Game;
+  game?: Game;
 };
 
 export class EventStats {

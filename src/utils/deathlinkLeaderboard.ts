@@ -1,4 +1,4 @@
-import type { EventStats, PlayerStats } from "../types/socket.types";
+import { PlayerStats, type EventStats } from "../types/socket.types";
 
 export type LeaderboardRow = PlayerStats & {
   totalGames: number;

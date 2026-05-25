@@ -82,7 +82,9 @@ export const KillcountsEvolution = ({
         data: deathlinks.map((item) => ({
           x: item.timestamp,
           y: item.killCount,
-          game: `${item.game.name} - ${item.game.player.username}`,
+          game: item.game
+            ? `${item.game?.name} - ${item.game?.player.username}`
+            : `${item.slot} - ${item.cause}`,
         })),
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
