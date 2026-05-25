@@ -170,6 +170,37 @@ function DashboardPage() {
 
   return (
     <div className="dashboard">
+      <img
+        className="deathlink-leaderboard__cloud deathlink-leaderboard__cloud--left"
+        src="/assets/images/cloud-0001.webp"
+        alt=""
+        aria-hidden="true"
+      />
+      <img
+        className="deathlink-leaderboard__cloud deathlink-leaderboard__cloud--top"
+        src="/assets/images/cloud-0002.webp"
+        alt=""
+        aria-hidden="true"
+      />
+      <img
+        className="deathlink-leaderboard__cloud deathlink-leaderboard__cloud--right"
+        src="/assets/images/cloud-0003.webp"
+        alt=""
+        aria-hidden="true"
+      />
+      <img
+        className="deathlink-leaderboard__island"
+        src="/assets/images/island-a.webp"
+        alt=""
+        aria-hidden="true"
+      />
+      <img
+        className="deathlink-leaderboard__rock"
+        src="/assets/images/rock-single.webp"
+        alt=""
+        aria-hidden="true"
+      />
+
       {eventStats && eventStats.endTime !== null && <StatsPage />}
       <DeathlinkLeaderboard event={eventStats} />
       {eventStats && lastDeathlinkInstance && lastGame && (

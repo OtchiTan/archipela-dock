@@ -12,6 +12,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import type { Deathlink } from "../types/socket.types";
+import { Panel } from "./core/Panel";
 
 type KillcountsEvolutionType = {
   deathlinks: Deathlink[];
@@ -93,5 +94,9 @@ export const KillcountsEvolution = ({
     ],
   };
 
-  return <Line options={options} data={chartData} />;
+  return (
+    <Panel>
+      <Line options={options} data={chartData} />
+    </Panel>
+  );
 };

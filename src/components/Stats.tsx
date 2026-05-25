@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { EventStats } from "../types/socket.types";
 import "./Stats.css";
+import { Panel } from "./core/Panel";
 
 type StatsType = {
   eventPlaytime: EventStats;
@@ -61,7 +62,7 @@ export const Stats = ({ eventPlaytime }: StatsType) => {
         </div>
       </header>
 
-      <div className="playtime__panel">
+      <Panel>
         {players.length === 0 ? (
           <div className="playtime__empty">
             Aucun temps de jeu disponible pour le moment.
@@ -148,7 +149,7 @@ export const Stats = ({ eventPlaytime }: StatsType) => {
             })}
           </div>
         )}
-      </div>
+      </Panel>
     </section>
   );
 };

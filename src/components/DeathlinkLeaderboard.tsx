@@ -5,6 +5,7 @@ import {
   type LeaderboardRow,
 } from "../utils/deathlinkLeaderboard";
 import "./DeathlinkLeaderboard.css";
+import { Panel } from "./core/Panel";
 
 interface DeathlinkLeaderboardProps {
   event: EventStats | null;
@@ -73,37 +74,6 @@ export function DeathlinkLeaderboard({ event }: DeathlinkLeaderboardProps) {
       className="deathlink-leaderboard"
       aria-label="Leaderboard DeathLink"
     >
-      <img
-        className="deathlink-leaderboard__cloud deathlink-leaderboard__cloud--left"
-        src="/assets/images/cloud-0001.webp"
-        alt=""
-        aria-hidden="true"
-      />
-      <img
-        className="deathlink-leaderboard__cloud deathlink-leaderboard__cloud--top"
-        src="/assets/images/cloud-0002.webp"
-        alt=""
-        aria-hidden="true"
-      />
-      <img
-        className="deathlink-leaderboard__cloud deathlink-leaderboard__cloud--right"
-        src="/assets/images/cloud-0003.webp"
-        alt=""
-        aria-hidden="true"
-      />
-      <img
-        className="deathlink-leaderboard__island"
-        src="/assets/images/island-a.webp"
-        alt=""
-        aria-hidden="true"
-      />
-      <img
-        className="deathlink-leaderboard__rock"
-        src="/assets/images/rock-single.webp"
-        alt=""
-        aria-hidden="true"
-      />
-
       <header className="deathlink-leaderboard__hero">
         <div>
           <h1 className="deathlink-leaderboard__eyebrow">
@@ -123,7 +93,7 @@ export function DeathlinkLeaderboard({ event }: DeathlinkLeaderboardProps) {
         </div>
       </header>
 
-      <div className="deathlink-leaderboard__panel">
+      <Panel>
         <div className="deathlink-leaderboard__headerRow">
           <span>Rang</span>
           <span>Joueur</span>
@@ -172,7 +142,7 @@ export function DeathlinkLeaderboard({ event }: DeathlinkLeaderboardProps) {
             )}
           </div>
         )}
-      </div>
+      </Panel>
     </section>
   );
 }

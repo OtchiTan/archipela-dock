@@ -40,3 +40,56 @@
   position: relative;
   z-index: 1;
 }
+
+.deathlink-leaderboard__cloud {
+  position: fixed;
+  pointer-events: none;
+  user-select: none;
+}
+
+.deathlink-leaderboard__island,
+.deathlink-leaderboard__rock {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+
+.deathlink-leaderboard__cloud {
+  opacity: 0.82;
+  filter: drop-shadow(0 12px 18px rgba(3, 38, 63, 0.14));
+  animation: cloud-float 11s ease-in-out infinite;
+}
+
+.deathlink-leaderboard__cloud--left {
+  width: min(36vw, 320px);
+  left: -28px;
+  top: 18vh;
+}
+
+.deathlink-leaderboard__cloud--top {
+  width: min(23vw, 210px);
+  top: 6vh;
+  right: 22vw;
+  animation-delay: -3s;
+}
+
+.deathlink-leaderboard__cloud--right {
+  width: min(29vw, 260px);
+  right: -26px;
+  top: 34vh;
+  animation-delay: -1.8s;
+}
+
+.deathlink-leaderboard__island {
+  width: min(34vw, 240px);
+  left: -22px;
+  bottom: 0;
+  opacity: 0.95;
+}
+
+.deathlink-leaderboard__rock {
+  width: min(11vw, 74px);
+  right: 4vw;
+  bottom: 0;
+  opacity: 0.92;
+}
