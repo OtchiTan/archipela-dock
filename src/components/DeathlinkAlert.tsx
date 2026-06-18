@@ -150,6 +150,7 @@ export function DeathlinkAlert({
     if (!event) return null;
 
     if (deathlink && game) {
+      console.log(game);
       const playerName = game.player?.username || "Unknown Player";
       const gameName = game.name || "Unknown Game";
       const deathCount = deathlink.killCount || 0;
