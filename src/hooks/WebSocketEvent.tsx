@@ -1,7 +1,5 @@
-import { io, type Socket } from "socket.io-client";
 import { useMemo } from "react";
-
-const socketUrl = import.meta.env.VITE_SOCKET_URL || "/events";
+import { io, type Socket } from "socket.io-client";
 
 function useWebSocketEvent(eventId: number | null): Socket | null {
   return useMemo(() => {
@@ -9,7 +7,7 @@ function useWebSocketEvent(eventId: number | null): Socket | null {
       return null;
     }
 
-    const socket = io(socketUrl, {
+    const socket = io("api/events", {
       query: { eventId: String(eventId) },
       reconnection: true,
       reconnectionDelay: 1000,

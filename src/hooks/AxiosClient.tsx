@@ -1,15 +1,13 @@
-import { useMemo } from "react";
 import axios, { type AxiosInstance } from "axios";
+import { useMemo } from "react";
 
-const defaultBaseURL = import.meta.env.VITE_API_URL ?? "";
-
-function useAxiosClient(baseURL = defaultBaseURL): AxiosInstance {
+function useAxiosClient(): AxiosInstance {
   return useMemo(() => {
     return axios.create({
-      baseURL,
+      baseURL: "/api",
       timeout: 5000,
     });
-  }, [baseURL]);
+  }, []);
 }
 
 export default useAxiosClient;
