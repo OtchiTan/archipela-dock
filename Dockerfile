@@ -10,7 +10,7 @@ RUN npm install
 
 COPY . .
 
-CMD ["npm","run", "build"]
+RUN npm run build
 
 FROM nginx:1.31.4-alpine as nginx
 
